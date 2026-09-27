@@ -1,0 +1,1 @@
+- Merge web-release.sh and web-debug.sh into web.sh.

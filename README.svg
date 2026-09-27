@@ -1,4 +1,4 @@
-<svg fill="none" viewBox="0 0 600 1080" width="600" height="1080" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" viewBox="0 0 600 100" width="600" height="100" xmlns="http://www.w3.org/2000/svg">
   <foreignObject width="100%" height="100%">
     <div xmlns="http://www.w3.org/1999/xhtml">
       <style>
@@ -107,13 +107,6 @@
           </h1>
         </div>
         <h2 id="sub-title">My Own Little World</h2>
-        <hr />
-        <div id="main-container">
-          <p>I enjoyed playing games like Minecraft, Garrys Mod, Rimworld, Rainworld, The Fallout Series, Skyrim.</p>
-          <p>They all have one thing in common; They let me interact with a seemingly living world or make one myself.</p>
-          <p>I love that aspect and they are all fantastic games.</p>
-          <p>But they all fall short in some aspect.</p>
-        </div>
       </div>
     </div>
   </foreignObject>

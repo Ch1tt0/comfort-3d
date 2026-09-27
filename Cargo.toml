@@ -1,0 +1,14 @@
+[package]
+name = "comfort-3d"
+version = "0.1.0"
+edition = "2024"
+license = "LICENSE"
+publish = false
+
+[dependencies]
+avian3d = "0.7.0"
+bevy = "0.19.1"
+serde = "1.0.229"
+# WORK_AROUND: Work around for wasm-bindgen failing on: 
+# error: failed to find intrinsics to enable `clone_ref` function.
+web-sys = "0.3.106"
