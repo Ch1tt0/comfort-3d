@@ -22,7 +22,7 @@ RUST_TARGET="wasm32-unknown-unknown"; # Rust wasm target.
 DEPENDENCIES_ARCH="libx11 pkgconf alsa-lib libxcursor libxrandr libxi gcc git pipewire-alsa pulseaudio-alsa vulkan-intel vulkan-radeon mold";
 
 # Dependencies for Ubuntu.
-DEPENDENCIES_UBUNTU="g++ mold clang git pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0 vulkan-radeon vulkan-intel mesa-vulkan-drivers";
+DEPENDENCIES_UBUNTU="g++ mold clang git pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0 mesa-vulkan-drivers";
 
 # File needed for wasm-bindgen.
 WASM_FILE=target/wasm32-unknown-unknown/release/${PROJECT_NAME}.wasm;
