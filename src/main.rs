@@ -3,25 +3,30 @@
 #![allow(unused_imports)]
 use web_sys::*;
 
-use avian3d::prelude::*;
 use bevy::{prelude::*, window::Window};
+use comfort_3d::GamePlugin;
 
 fn main() {
-    App::new()
-        // Add Bevy default plugins.
-        // Fits canvas to parent (<body>).
-        // Prevents browser hotkeys from escaping.
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
+    // Rust compiler for some reason complains if I don't do this.
+    let mut app_binding = App::new();
+
+    let app = app_binding.add_plugins((
+        // 1. Fits canvas to parent (<body>).
+        // 2. Prevents browser hotkeys from escaping.
+        DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 fit_canvas_to_parent: true,
                 prevent_default_event_handling: false,
                 ..default()
             }),
             ..default()
-        }))
-        .add_plugins(PhysicsPlugins::default()) // Add Avian3D default plugins.
-        .add_systems(Startup, scene.spawn())
-        .run();
+        }),
+        GamePlugin,
+    ));
+
+    app.add_systems(Startup, scene.spawn());
+
+    app.run();
 }
 
 fn scene() -> impl SceneList {

@@ -174,7 +174,7 @@ fi
 
 echo -e "${CYAN}Compiling project with target ${RUST_TARGET}${RESET_FORMAT}";
 
-if cargo build --release --target $RUST_TARGET >/dev/null 2>&1; then
+if cargo build --profile wasm-release --target $RUST_TARGET >/dev/null 2>&1; then
   echo -e "${GREEN}Sucessfully compiled project with target ${RUST_TARGET}${RESET_FORMAT}";
 else
   echo -e "${RED}${BOLD}There was an error compiling project with target ${RUST_TARGET}! Aborting...${RESET_FORMAT}";
