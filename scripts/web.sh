@@ -7,7 +7,6 @@
 
 PROJECT_NAME="comfort-3d"; # Name.
 HUMAN_PROJECT_NAME="Comfort 3D"; # Human readable name.
-RELEASE=true; # Release or Debug, default: release.
 
 WASM_BINDGEN_BIN="wasm-bindgen"; # Name of wasm-bindgen-cli executable.
 
@@ -38,7 +37,7 @@ CYAN="\e[96m";
 
 # STAGE 1: Update system, Install needed dependencies, Install toolchain and target.
 
-case $ID in
+case $ID in # Variable comes from ". /etc/os-release"!
   ubuntu)
       echo -e "${CYAN}This is Ubuntu! Updating system...${RESET_FORMAT}";
       
@@ -59,39 +58,6 @@ case $ID in
         echo -e "${GREEN}Successfully installed dependencies!${RESET_FORMAT}";
       else
         echo -e "${BOLD}${RED}There was an error installing dependencies! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-
-      # Update Rust using rustup.
-
-      echo -e "${CYAN}Updating Rust with rustup...${RESET_FORMAT}";
-      
-      if rustup update 2>&1; then
-        echo -e "${GREEN}Successfully updated Rust using rustup!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error updating Rust using rustup! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-
-      # Install Rust toolchain.
-
-      echo -e "${CYAN}Installing Rust toolchain...${RESET_FORMAT}";
-
-      if rustup toolchain install "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully installed ${RUST_TOOLCHAIN}!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error installing ${RUST_TOOLCHAIN}! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-      
-      # Set installed toolchain as default.
-      
-      echo -e "${CYAN}Setting $RUST_TOOLCHAIN as default...${RESET_FORMAT}";
-
-      if rustup default "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully set $RUST_TOOLCHAIN as default!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error setting $RUST_TOOLCHAIN as default! Aborting...${RESET_FORMAT}";
         exit 1;
       fi
     ;;
@@ -118,39 +84,6 @@ case $ID in
         echo -e "${BOLD}${RED}There was an error installing dependencies! Aborting...${RESET_FORMAT}";
         exit 1;
       fi
-
-      # Update Rust using rustup.
-
-      echo -e "${CYAN}Updating Rust with rustup...${RESET_FORMAT}";
-      
-      if rustup update 2>&1; then
-        echo -e "${GREEN}Successfully updated Rust using rustup!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error updating Rust using rustup! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-
-      # Install Rust toolchain.
-
-      echo -e "${CYAN}Installing Rust toolchain...${RESET_FORMAT}";
-
-      if rustup toolchain install "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully installed ${RUST_TOOLCHAIN}!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error installing ${RUST_TOOLCHAIN}! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-      
-      # Set installed toolchain as default.
-      
-      echo -e "${CYAN}Setting $RUST_TOOLCHAIN as default...${RESET_FORMAT}";
-
-      if rustup default "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully set $RUST_TOOLCHAIN as default!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error setting $RUST_TOOLCHAIN as default! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
     ;;
 
   cachyos)
@@ -175,39 +108,6 @@ case $ID in
         echo -e "${BOLD}${RED}There was an error installing dependencies! Aborting...${RESET_FORMAT}";
         exit 1;
       fi
-
-      # Update Rust using rustup.
-
-      echo -e "${CYAN}Updating Rust with rustup...${RESET_FORMAT}";
-      
-      if rustup update 2>&1; then
-        echo -e "${GREEN}Successfully updated Rust using rustup!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error updating Rust using rustup! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-
-      # Install Rust toolchain.
-
-      echo -e "${CYAN}Installing Rust toolchain...${RESET_FORMAT}";
-
-      if rustup toolchain install "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully installed ${RUST_TOOLCHAIN}!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error installing ${RUST_TOOLCHAIN}! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
-      
-      # Set installed toolchain as default.
-      
-      echo -e "${CYAN}Setting $RUST_TOOLCHAIN as default...${RESET_FORMAT}";
-
-      if rustup default "$RUST_TOOLCHAIN" 2>&1; then
-        echo -e "${GREEN}Sucessfully set $RUST_TOOLCHAIN as default!${RESET_FORMAT}";
-      else
-        echo -e "${BOLD}${RED}There was an error setting $RUST_TOOLCHAIN as default! Aborting...${RESET_FORMAT}";
-        exit 1;
-      fi
     ;;
 
   *)
@@ -217,7 +117,46 @@ case $ID in
 esac
 
 
-# STAGE 2: Check for wasm-bindgen-cli, if missing install it.
+# STAGE 2: Update Rust, Install toolchain, Set toolchain as default, Install target wasm32-unknown-unknown.
+
+echo -e "${CYAN}Updating Rust with rustup...${RESET_FORMAT}";
+
+if rustup update 2>&1; then
+  echo -e "${GREEN}Successfully updated Rust using rustup!${RESET_FORMAT}";
+
+  echo -e "${CYAN}Installing Rust toolchain...${RESET_FORMAT}";
+
+  if rustup toolchain install "$RUST_TOOLCHAIN" 2>&1; then
+    echo -e "${GREEN}Sucessfully installed ${RUST_TOOLCHAIN}!${RESET_FORMAT}";
+
+    echo -e "${CYAN}Setting $RUST_TOOLCHAIN as default...${RESET_FORMAT}";
+
+    if rustup default "$RUST_TOOLCHAIN" 2>&1; then
+      echo -e "${GREEN}Sucessfully set $RUST_TOOLCHAIN as default!${RESET_FORMAT}";
+
+      echo -e "${CYAN}Installing target ${RUST_TARGET}${RESET_FORMAT}";
+
+      if rustup target add $RUST_TARGET >/dev/null 2>&1; then
+        echo -e "${GREEN}Sucessfully installed target ${RUST_TARGET}${RESET_FORMAT}";
+      else
+        echo -e "${RED}${BOLD}There was an error installing target ${RUST_TARGET}! Aborting...${RESET_FORMAT}";
+        exit 1;
+      fi
+    else
+      echo -e "${BOLD}${RED}There was an error setting $RUST_TOOLCHAIN as default! Aborting...${RESET_FORMAT}";
+      exit 1;
+    fi
+  else
+    echo -e "${BOLD}${RED}There was an error installing ${RUST_TOOLCHAIN}! Aborting...${RESET_FORMAT}";
+    exit 1;
+  fi
+else
+  echo -e "${BOLD}${RED}There was an error updating Rust using rustup! Aborting...${RESET_FORMAT}";
+  exit 1;
+fi
+
+
+# STAGE 3: Check for wasm-bindgen-cli, if missing install it.
 
 if command -v "$WASM_BINDGEN_BIN" >/dev/null 2>&1; then
     echo -e "${GREEN}Binary $WASM_BINDGEN_BIN is intalled!${RESET_FORMAT}";
@@ -231,7 +170,7 @@ else
 fi
 
 
-# STAGE 3: Compile project with target wasm32-unknown-unknown.
+# STAGE 4: Compile project with target wasm32-unknown-unknown.
 
 echo -e "${CYAN}Compiling project with target ${RUST_TARGET}${RESET_FORMAT}";
 
@@ -243,12 +182,12 @@ else
 fi
 
 
-# STAGE 4: Assemble dist folder.
+# STAGE 5: Assemble dist folder.
 
 echo -e "${CYAN}Generating $DIST_FOLDER folder...${RESET_FORMAT}";
 
-if mkdir $DIST_FOLDER >/dev/null 2>&1; then # Create dist/.
-  if mkdir $DIST_ASSETS_FOLDER >/dev/null 2>&1; then # Create dist/assets/.
+if mkdir -p $DIST_FOLDER >/dev/null 2>&1; then # Create dist/.
+  if mkdir -p $DIST_ASSETS_FOLDER >/dev/null 2>&1; then # Create dist/assets/.
     if cp -a $WEB_FOLDER $DIST_FOLDER >/dev/null 2>&1; then # Copy web/ contents to dist/.
       if cp -a $ASSETS_FOLDER $DIST_ASSETS_FOLDER >/dev/null 2>&1; then # Copy assets/ contents to dist/assets.
         if wasm-bindgen --out-name $PROJECT_NAME --out-dir $DIST_FOLDER --target web $WASM_FILE 2>&1; then # Use wasm-bindgen to generate files.
