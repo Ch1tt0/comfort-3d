@@ -43,7 +43,7 @@ case $ID in # Variable comes from ". /etc/os-release"!
       
       # Update system.
 
-      if sudo apt-update && sudo apt-upgrade 2>&1; then
+      if sudo apt update && sudo apt upgrade 2>&1; then
         echo -e "${GREEN}Successfully updated system!${RESET_FORMAT}";
       else
         echo -e "${BOLD}${RED}There was an error updating the system! Aborting...${RESET_FORMAT}";
