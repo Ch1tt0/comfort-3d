@@ -186,10 +186,10 @@ fi
 
 echo -e "${CYAN}Generating $DIST_FOLDER folder...${RESET_FORMAT}";
 
-if mkdir -p $DIST_FOLDER >/dev/null 2>&1; then # Create dist/.
-  if mkdir -p $DIST_ASSETS_FOLDER >/dev/null 2>&1; then # Create dist/assets/.
-    if cp -a $WEB_FOLDER $DIST_FOLDER >/dev/null 2>&1; then # Copy web/ contents to dist/.
-      if cp -a $ASSETS_FOLDER $DIST_ASSETS_FOLDER >/dev/null 2>&1; then # Copy assets/ contents to dist/assets.
+if mkdir -p $DIST_FOLDER 2>&1; then # Create dist/.
+  if mkdir -p $DIST_ASSETS_FOLDER 2>&1; then # Create dist/assets/.
+    if cp -a $WEB_FOLDER $DIST_FOLDER 2>&1; then # Copy web/ contents to dist/.
+      if cp -a $ASSETS_FOLDER $DIST_ASSETS_FOLDER 2>&1; then # Copy assets/ contents to dist/assets.
         if wasm-bindgen --out-name $PROJECT_NAME --out-dir $DIST_FOLDER --target web $WASM_FILE 2>&1; then # Use wasm-bindgen to generate files.
           echo -e "${GREEN}Sucessfully generated ${DIST_FOLDER} folder!${RESET_FORMAT}";
         else
