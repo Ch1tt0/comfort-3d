@@ -25,7 +25,7 @@ DEPENDENCIES_ARCH="libx11 pkgconf alsa-lib libxcursor libxrandr libxi gcc git pi
 DEPENDENCIES_UBUNTU="g++ mold clang git pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0 mesa-vulkan-drivers";
 
 # File needed for wasm-bindgen.
-WASM_FILE=target/wasm32-unknown-unknown/release/${PROJECT_NAME}.wasm;
+WASM_FILE=target/wasm32-unknown-unknown/wasm-release/${PROJECT_NAME}.wasm;
 
 # Color and format variables.
 BOLD="\e[1m";
