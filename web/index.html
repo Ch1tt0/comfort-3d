@@ -3,12 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <style>
+      *,*::before,*::after {
+        sizing: border-box;
+      }
+      
       html {
         height: 100%;
         width: 100%;
 
         margin: 0;
       }
+      
       body {
         height: 100%;
         width: 100%;
@@ -25,11 +30,11 @@
             white 100%
           )
           repeat;
+        
         background-size: 20px 20px;
       }
+      
       canvas {
-        margin: 5px;
-        
         background-color: white;
       }
     </style>
