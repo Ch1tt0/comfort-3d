@@ -1,17 +1,30 @@
 [package]
 name = "comfort-3d"
-version = "0.1.0"
-edition = "2024"
+version = "0.0.1-alpha"
+description = "My perfect little world."
 license = "LICENSE"
+homepage = "https://ch1tt0.github.io/comfort-3d"
+documentation = "https://ch1tt0.github.io/comfort-3d/docs"
+readme = "README.md"
 publish = false
+edition = "2024"
 
 [dependencies]
-avian3d = "0.7.0"
+avian3d = { version = "0.7.0", features = [ "simd", "serialize", "validate" ]}
 bevy = "0.19.1"
 serde = "1.0.229"
-# WORK_AROUND: Work around for wasm-bindgen failing on: 
+# WORK_AROUND: Work around for wasm-bindgen failing on:
 # error: failed to find intrinsics to enable `clone_ref` function.
 web-sys = "0.3.106"
+
+[features]
+dev = [
+    "avian3d/bevy_diagnostic",
+    "avian3d/diagnostic_ui",
+    "avian3d/debug-plugin",
+
+    "bevy/free_camera"
+]
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
