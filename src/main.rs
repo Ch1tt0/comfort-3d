@@ -7,7 +7,7 @@ use bevy::{prelude::*, window::Window};
 
 mod debug;
 mod dev_tools;
-use comfort_3d::AppPlugin;
+use comfort3d::AppPlugin;
 
 fn main() {
     let app: &mut App = &mut App::new();
@@ -26,7 +26,6 @@ fn main() {
         AppPlugin,
     ));
 
-    #[cfg(feature = "dev")]
     app.add_plugins((dev_tools::DevToolsPlugin, debug::DebugPlugin));
 
     app.run();

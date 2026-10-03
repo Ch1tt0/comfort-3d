@@ -1,30 +1,37 @@
 [package]
-name = "comfort-3d"
+name = "comfort3d"
 version = "0.0.1-alpha"
 description = "My perfect little world."
 license = "LICENSE"
-homepage = "https://ch1tt0.github.io/comfort-3d"
-documentation = "https://ch1tt0.github.io/comfort-3d/docs"
+homepage = "https://ch1tt0.github.io/comfort3d"
+documentation = "https://ch1tt0.github.io/comfort3d/docs"
 readme = "README.md"
 publish = false
 edition = "2024"
 
 [dependencies]
-avian3d = { version = "0.7.0", features = [ "simd", "serialize", "validate" ]}
-bevy = "0.19.1"
+avian3d = { version = "0.7.0", default-features = false, features = [ 
+  "3d", 
+  "default-collider", 
+  "xpbd_joints", 
+  "collider-from-mesh", 
+  "bevy_scene", 
+  "bevy_picking", 
+  "parallel", 
+  "simd", 
+  "serialize", 
+  "validate", 
+  "f64", 
+  "parry-f64",
+  "bevy_diagnostic",
+  "diagnostic_ui",
+  "debug-plugin"
+  ]}
+bevy = { version = "0.19.1", features = [ "free_camera" ] }
 serde = "1.0.229"
 # WORK_AROUND: Work around for wasm-bindgen failing on:
 # error: failed to find intrinsics to enable `clone_ref` function.
 web-sys = "0.3.106"
-
-[features]
-dev = [
-    "avian3d/bevy_diagnostic",
-    "avian3d/diagnostic_ui",
-    "avian3d/debug-plugin",
-
-    "bevy/free_camera"
-]
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
@@ -36,12 +43,14 @@ opt-level = 3
 
 # Enable more optimization in the release profile at the cost of compile time.
 [profile.release]
+opt-level = 3
 # Compile the entire crate as one unit.
 # Slows compile times, marginal improvements.
 codegen-units = 1
 # Do a second optimization pass over the entire program, including dependencies.
 # Slows compile times, marginal improvements.
 lto = "thin"
+incremental = false
 
 # Optimize for size in the wasm-release profile to reduce load times and bandwidth usage on web.
 [profile.wasm-release]

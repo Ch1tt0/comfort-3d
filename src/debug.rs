@@ -1,4 +1,4 @@
-// use avian3d::diagnostics::PhysicsDiagnosticsPlugin;
+use avian3d::diagnostics::PhysicsDiagnosticsPlugin;
 use avian3d::prelude::*;
 use bevy::app::{App, Plugin, Startup};
 use bevy::camera_controller::free_camera::FreeCameraPlugin;

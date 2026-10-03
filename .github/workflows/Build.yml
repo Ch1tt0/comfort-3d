@@ -1,0 +1,74 @@
+name: Build
+
+on:
+  push:
+    branches: ["master"]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        profile: ["dev", "release", "wasm-release"]
+        target:
+          [
+            "wasm32-unknown-unknown",
+            "x86_64-pc-windows-msvc",
+            "x86_64-unknown-linux-gnu",
+          ]
+        exclude:
+          - os: windows-latest # Don't compile for Linux on Windows.
+            target: "x86_64-unknown-linux-gnu"
+          - os: ubuntu-latest # Don't compile for Windows on Linux.
+            toolchain: "x86_64-pc-windows-msvc"
+
+          - target: "x86_64-pc-windows-msvc" # When compiling for Windows, don't use the wasm-release profile.
+            profile: "wasm-release"
+          - target: "x86_64-unknown-linux-gnu" # When compiling for Linux, don't use the wasm-release profile.
+            profile: "wasm-release"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Restore Cache
+        uses: actions/cache@v6
+        with:
+          path: [
+              # Rust cache.
+              "~/.cargo/registry/index/",
+              "~/.cargo/registry/cache/",
+              "~/.cargo/git/db/",
+              "target/",
+
+              # Node cache.
+              "node_modules/",
+            ]
+
+          key: ${{ matrix.os }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ matrix.os }}-
+
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v2
+        with:
+          toolchain: nightly
+          target: ${{ matrix.target }}
+          cache: false # We handle cache on our own.
+
+      - name: Install Dependencies # Runs only if the runner OS is ubuntu-latest.
+        if: ${{ matrix.os == ubuntu-latest }}
+        run: apt-get install
+
+      - name: Build
+        run: cargo build --verbose

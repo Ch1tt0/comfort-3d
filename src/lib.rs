@@ -15,8 +15,9 @@ pub struct AppPlugin;
 
 impl Plugin for AppPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(PhysicsPlugins::default()) // Avian3D
-            .add_systems(Startup, scenes::dev::scene.spawn());
+        app.add_plugins(PhysicsPlugins::default()); // Avian3D
+
+        app.add_systems(Startup, scenes::dev::scene.spawn());
     }
 }
 

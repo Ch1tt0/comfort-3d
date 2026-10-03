@@ -63,9 +63,6 @@
         }
         #title-part-7 {
           color: #ef9f76;
-
-          /* Simulate a space. */
-          margin-right: 1rem;
         }
         #title-part-8 {
           color: #e78284;

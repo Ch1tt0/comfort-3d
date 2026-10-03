@@ -1,20 +1,25 @@
 use avian3d::prelude::*;
 use bevy::camera_controller::free_camera::FreeCamera;
+// use bevy::math::DVec3;
 use bevy::prelude::*;
 
 pub fn scene() -> impl SceneList {
     bsn_list! [
         (
             #CircularBase
-            Mesh3d(asset_value(Circle::new(4.0)))
+            Mesh3d(asset_value(Cylinder::new(25.0, 1.0)))
 
             template_value(RigidBody::Static)
-            Collider::cylinder(4.0, 0.1)
+            Collider::cylinder(25.0, 1.0)
 
             MeshMaterial3d::<StandardMaterial>(asset_value(Color::WHITE))
 
-            Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_2))
         ),
+        // (
+        //   #Voxels
+        //   template_value(RigidBody::Static)
+        //   Collider::voxels(DVec3::new(0.5, 0.5, 0.5), &[IVec3::new(0, 0, 0), IVec3::new(1, 1, 1)])
+        // ),
         (
             #Cube
             Mesh3d(asset_value(Cuboid::new(1.0, 1.0, 1.0)))
