@@ -45,16 +45,12 @@ jobs:
       - name: Restore Cache
         uses: actions/cache@v6
         with:
-          path: [
-              # Rust cache.
-              "~/.cargo/registry/index/",
-              "~/.cargo/registry/cache/",
-              "~/.cargo/git/db/",
-              "target/",
-
-              # Node cache.
-              "node_modules/",
-            ]
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+            node_modules/
 
           key: ${{ matrix.os }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ matrix.os }}-
@@ -67,7 +63,7 @@ jobs:
           cache: false # We handle cache on our own.
 
       - name: Install Dependencies # Runs only if the runner OS is ubuntu-latest.
-        if: ${{ matrix.os == ubuntu-latest }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: apt-get install
 
       - name: Build
