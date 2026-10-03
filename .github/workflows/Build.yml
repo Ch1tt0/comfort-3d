@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }}
+    name: Build on ${{ matrix.os }} for ${{ matrix.target }} with ${{ matrix.profile }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
@@ -24,8 +24,10 @@ jobs:
             "x86_64-unknown-linux-gnu",
           ]
         exclude:
-          - os: windows-latest # Don't compile for Linux on Windows.
-            target: "x86_64-unknown-linux-gnu"
+          - os: windows-latest # Don't compile for Linux on Windows and don't compile for Webassembly.
+            target: |
+              "x86_64-unknown-linux-gnu"
+              "wasm32-unknown-unknown"
           - os: ubuntu-latest # Don't compile for Windows on Linux.
             target: "x86_64-pc-windows-msvc"
 
@@ -67,4 +69,4 @@ jobs:
         run: apt-get install
 
       - name: Build
-        run: cargo build --verbose
+        run: cargo build --profile ${{ matrix.profile }} --target ${{ matrix.target }} --verbose
