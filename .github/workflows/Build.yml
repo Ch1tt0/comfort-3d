@@ -25,9 +25,7 @@ jobs:
           ]
         exclude:
           - os: windows-latest # Don't compile for Linux on Windows and don't compile for Webassembly.
-            target: |
-              "x86_64-unknown-linux-gnu"
-              "wasm32-unknown-unknown"
+            target: ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
           - os: ubuntu-latest # Don't compile for Windows on Linux.
             target: "x86_64-pc-windows-msvc"
 
